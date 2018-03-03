@@ -95,7 +95,9 @@ var vue_app = new Vue({
             'name',
             { key: 'delete', label: 'Delete number' },
             { key: 'addToScamAI', label: 'Add number to scamAI'}
-        ]
+        ],
+        querryNumber : "",
+        querryStatus : ""
     },
     methods: {
         /*
@@ -386,6 +388,21 @@ var vue_app = new Vue({
                 console.log("raspuns2", response);
                 if(response.status == "success") {
                     this.aiscams.push(tmp_toAddScamAI);
+                } else {
+                    this.showModals.erroreState = true;
+                    this.erroreMessage = response.message;
+                }
+            });
+        },
+        getNumberStatus: function() {
+            this.$http.get(this.backendServerUrl + 'all/' + this.querryNumber).then(response => {
+                return response.body;
+            }, response => {
+                console.log("eroare1", response);
+            }).then( response => {
+                console.log("raspuns2", response);
+                if(response.status == "success") {
+                    this.querryStatus = response.message;
                 } else {
                     this.showModals.erroreState = true;
                     this.erroreMessage = response.message;
