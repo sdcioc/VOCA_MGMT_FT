@@ -85,6 +85,9 @@
             <template slot="delete" slot-scope="data">
                 <button type="button" class="btn btn-primary" v-on:click="deleteScamAI(data.index)">Delete</button>
             </template>
+            <template slot="addToScam" slot-scope="data">
+                <button type="button" class="btn btn-primary" v-on:click="addScamAIToScam(data.index)">Add to Scam</button>
+            </template>
 
         </b-table>
 
@@ -131,6 +134,9 @@
             
             <template slot="delete" slot-scope="data">
                 <button type="button" class="btn btn-primary" v-on:click="deleteTask(data.index)">Delete</button>
+            </template>
+            <template slot="addToScamAI" slot-scope="data">
+                <button type="button" class="btn btn-primary" v-on:click="addTaskToScamAI(data.index)">Add to ScamAI</button>
             </template>
 
         </b-table>

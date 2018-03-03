@@ -85,14 +85,16 @@ var vue_app = new Vue({
             'number',
             'type',
             'name',
-            { key: 'delete', label: 'Delete number' }
+            { key: 'delete', label: 'Delete number' },
+            { key: 'addToScam', label: 'Add number to scam'}
         ],
         tasksfields: [
             'index',
             'number',
             'type',
             'name',
-            { key: 'delete', label: 'Delete number' }
+            { key: 'delete', label: 'Delete number' },
+            { key: 'addToScamAI', label: 'Add number to scamAI'}
         ]
     },
     methods: {
@@ -282,6 +284,30 @@ var vue_app = new Vue({
                 }
             });
         },
+        addScamAIToScam: function(index) {
+            var messageToSend = {
+                "number" : this.aiscams[index].number,
+                "type" : this.aiscams[index].type,
+                "name" : this.aiscams[index].name
+            }
+            var tmp_toAddScam = new Object();
+            tmp_toAddScam.number = this.aiscams[index].number;
+            tmp_toAddScam.type = this.aiscams[index].type;
+            tmp_toAddScam.name = this.aiscams[index].name;
+            this.$http.post(this.backendServerUrl + 'management/scam', messageToSend).then(response => {
+                return response.body;
+            }, response => {
+                console.log("eroare1", response);
+            }).then( response => {
+                console.log("raspuns2", response);
+                if(response.status == "success") {
+                    this.scams.push(tmp_toAddScam);
+                } else {
+                    this.showModals.erroreState = true;
+                    this.erroreMessage = response.message;
+                }
+            });
+        },
 
         // TASKS
         refreshTasks: function() {
@@ -328,7 +354,7 @@ var vue_app = new Vue({
             this.toAddTask.type = "";
             this.toAddTask.name = "";
 
-            this.$http.post(this.backendServerUrl + 'ai/scam', messageToSend).then(response => {
+            this.$http.post(this.backendServerUrl + 'mobile/posiblescam', messageToSend).then(response => {
                 return response.body;
             }, response => {
                 console.log("eroare1", response);
@@ -336,6 +362,30 @@ var vue_app = new Vue({
                 console.log("raspuns2", response);
                 if(response.status == "success") {
                     this.tasks.push(tmp_toAddTask);
+                } else {
+                    this.showModals.erroreState = true;
+                    this.erroreMessage = response.message;
+                }
+            });
+        },
+        addTaskToScamAI: function(index) {
+            var messageToSend = {
+                "number" : this.tasks[index].number,
+                "type" : this.tasks[index].type,
+                "name" : this.tasks[index].name
+            }
+            var tmp_toAddScamAI = new Object();
+            tmp_toAddScamAI.number = this.tasks[index].number;
+            tmp_toAddScamAI.type = this.tasks[index].type;
+            tmp_toAddScamAI.name = this.tasks[index].name;
+            this.$http.post(this.backendServerUrl + 'ai/scam', messageToSend).then(response => {
+                return response.body;
+            }, response => {
+                console.log("eroare1", response);
+            }).then( response => {
+                console.log("raspuns2", response);
+                if(response.status == "success") {
+                    this.aiscams.push(tmp_toAddScamAI);
                 } else {
                     this.showModals.erroreState = true;
                     this.erroreMessage = response.message;
