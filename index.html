@@ -27,175 +27,78 @@
   <div id="app">
     <v-app>
       <v-content>
-
-
-
         <template>
-        <b-table :fields="scamsfields" :items="scams">
-            
-            <template slot="index" slot-scope="data">
-            {{data.index + 1}}
-            </template>
-            
-            <template slot="delete" slot-scope="data">
-                <button type="button" class="btn btn-primary" v-on:click="deleteScam(data.index)">Delete</button>
-            </template>
-
-        </b-table>
-        <b-btn class="float-right" variant="primary" v-on:click="refreshScams()">
-            Refresh
-        </b-btn>
-
-            <b-card bg-variant="light">
-                <b-form-group horizontal
-                                breakpoint="lg"
-                                label="Add Scam"
-                                label-size="lg"
-                                label-class="font-weight-bold pt-0"
-                                class="mb-0">
-                    <b-form-group horizontal
-                                label="Number:"
-                                label-class="text-sm-right">
-                    <b-form-input v-model="toAddScam.number"></b-form-input>
-                    </b-form-group>
-                    <b-form-group horizontal
-                                label="Type:"
-                                label-class="text-sm-right">
-                    <b-form-input v-model="toAddScam.type"></b-form-input>
-                    </b-form-group>
-                    <b-form-group horizontal
-                                label="Name:"
-                                label-class="text-sm-right">
-                    <b-form-input v-model="toAddScam.name"></b-form-input>
-                    </b-form-group>
-                    <b-btn size="sm" class="float-right" variant="primary" v-on:click="addScam()">
-                            Add
-                            </b-btn>
-                </b-form-group>
-            </b-card>
-        </template>
-
-        <template>
-        <b-table :fields="aiscamsfields" :items="aiscams">
-            
-            <template slot="index" slot-scope="data">
-            {{data.index + 1}}
-            </template>
-            
-            <template slot="delete" slot-scope="data">
-                <button type="button" class="btn btn-primary" v-on:click="deleteScamAI(data.index)">Delete</button>
-            </template>
-            <template slot="addToScam" slot-scope="data">
-                <button type="button" class="btn btn-primary" v-on:click="addScamAIToScam(data.index)">Add to Scam</button>
-            </template>
-
-        </b-table>
-
-
-        <b-btn class="float-right" variant="primary" v-on:click="refreshScamsAI()">
-                Refresh
-            </b-btn>
     
                 <b-card bg-variant="light">
                     <b-form-group horizontal
                                     breakpoint="lg"
-                                    label="Add ScamAI"
+                                    label="Add Number"
                                     label-size="lg"
                                     label-class="font-weight-bold pt-0"
                                     class="mb-0">
                         <b-form-group horizontal
                                     label="Number:"
                                     label-class="text-sm-right">
-                        <b-form-input v-model="toAddAIScam.number"></b-form-input>
+                        <b-form-input v-model="toAddNumber.number"></b-form-input>
                         </b-form-group>
                         <b-form-group horizontal
                                     label="Type:"
                                     label-class="text-sm-right">
-                        <b-form-input v-model="toAddAIScam.type"></b-form-input>
+                        <b-form-input v-model="toAddNumber.type"></b-form-input>
                         </b-form-group>
                         <b-form-group horizontal
                                     label="Name:"
                                     label-class="text-sm-right">
-                        <b-form-input v-model="toAddAIScam.name"></b-form-input>
+                        <b-form-input v-model="toAddNumber.level"></b-form-input>
                         </b-form-group>
-                        <b-btn size="sm" class="float-right" variant="primary" v-on:click="addScamAI()">
+                        <b-btn size="sm" class="float-right" variant="primary" v-on:click="addNumber()">
                                 Add
                                 </b-btn>
                     </b-form-group>
                 </b-card>
-        </template>
 
-        <template>
-        <b-table :fields="tasksfields" :items="tasks">
-            
-            <template slot="index" slot-scope="data">
-            {{data.index + 1}}
-            </template>
-            
-            <template slot="delete" slot-scope="data">
-                <button type="button" class="btn btn-primary" v-on:click="deleteTask(data.index)">Delete</button>
-            </template>
-            <template slot="addToScamAI" slot-scope="data">
-                <button type="button" class="btn btn-primary" v-on:click="addTaskToScamAI(data.index)">Add to ScamAI</button>
-            </template>
-
-        </b-table>
-
-        <b-btn class="float-right" variant="primary" v-on:click="refreshTasks()">
-                Refresh
-            </b-btn>
-    
                 <b-card bg-variant="light">
                     <b-form-group horizontal
                                     breakpoint="lg"
-                                    label="Add ScamAI"
+                                    label="Delete Number"
                                     label-size="lg"
                                     label-class="font-weight-bold pt-0"
                                     class="mb-0">
                         <b-form-group horizontal
                                     label="Number:"
                                     label-class="text-sm-right">
-                        <b-form-input v-model="toAddTask.number"></b-form-input>
+                        <b-form-input v-model="toDeleteNumber"></b-form-input>
                         </b-form-group>
-                        <b-form-group horizontal
-                                    label="Type:"
-                                    label-class="text-sm-right">
-                        <b-form-input v-model="toAddTask.type"></b-form-input>
-                        </b-form-group>
-                        <b-form-group horizontal
-                                    label="Name:"
-                                    label-class="text-sm-right">
-                        <b-form-input v-model="toAddTask.name"></b-form-input>
-                        </b-form-group>
-                        <b-btn size="sm" class="float-right" variant="primary" v-on:click="addTask()">
-                                Add
+                        <b-btn size="sm" class="float-right" variant="primary" v-on:click="deleteNumber()">
+                                Delete
                                 </b-btn>
                     </b-form-group>
                 </b-card>
         </template>
 
         <b-card bg-variant="light">
+            <b-form-group horizontal
+                            breakpoint="lg"
+                            label="Get number status"
+                            label-size="lg"
+                            label-class="font-weight-bold pt-0"
+                            class="mb-0">
                 <b-form-group horizontal
-                                breakpoint="lg"
-                                label="Get number status"
-                                label-size="lg"
-                                label-class="font-weight-bold pt-0"
-                                class="mb-0">
-                    <b-form-group horizontal
-                                label="Number:"
-                                label-class="text-sm-right">
-                    <b-form-input v-model="querryNumber"></b-form-input>
-                    </b-form-group>
-                    <b-form-group horizontal
-                                label="Status:"
-                                label-class="text-sm-right">
-                        {{querryStatus}}
-                    </b-form-group>
-                    <b-btn size="sm" class="float-right" variant="primary" v-on:click="getNumberStatus()">
-                        Get Status
-                    </b-btn>
+                            label="Number:"
+                            label-class="text-sm-right">
+                <b-form-input v-model="toQuerryNumber"></b-form-input>
                 </b-form-group>
-            </b-card>
+                <b-form-group horizontal
+                            label="Status:"
+                            label-class="text-sm-right">
+                    {{querryStatus.type}}
+                    {{querryStatus.level}}
+                </b-form-group>
+                <b-btn size="sm" class="float-right" variant="primary" v-on:click="getNumber()">
+                    Get Status
+                </b-btn>
+            </b-form-group>
+        </b-card>
 
 
       </v-content>
@@ -228,6 +131,6 @@
     <script src="js/vue-resource.js"></script>
     <script src="js/polyfill.js"></script>
     <script src="js/bootstrap-vue.js"></script>
-    <script src="js/myvueapp.js"></script>
+    <script src="js/myvueapp1.js"></script>
 </body>
 </html>
